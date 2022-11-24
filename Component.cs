@@ -1,16 +1,12 @@
-using System.Collections.Generic;
-
-namespace TDGame
+namespace TDGame;
+public class Component
 {
-    public class Component
-    {
-        public int Id { get; }
-        public Entity Entity { get; set; }
-        public bool Active { get; set; }
+    public int Id { get; }
+    public Entity Entity { get; set; }
+    public bool Active { get; set; }
 
-        public Component(bool active)
-        {
-            Active = active;
-        }
+    public Component(bool active)
+    {
+        Active = active;
     }
 }
