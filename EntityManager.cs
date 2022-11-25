@@ -4,8 +4,8 @@ using System.Collections.Generic;
 namespace TDGame;
 public class EntityManager
 {
-    public List<Entity> Entities = new List<Entity>();
-    public static EntityManager Instance;
+    private List<Entity> Entities = new List<Entity>();
+    public static EntityManager Instance { get; set; }
     public event Action<Entity, Component> OnComponentAdded;
     public event Action<Entity, Component> OnComponentRemoved;
     public event Action<Entity> OnEntityAdded;
@@ -15,6 +15,8 @@ public class EntityManager
     {
         Instance = this;
     }
+
+    public List<Entity> GetEntities() => Entities;
 
     public void AddEntity(Entity entity)
     {
