@@ -42,13 +42,16 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         new EntityManager();
-        new SceneManager(_spriteBatch, new[] {
-            new Scene1("scene1", true, Content)
-        });
         _drawingSystem = new DrawingSystem(_spriteBatch);
         _enemySystem = new EnemySystem();
         _collisionSystem = new CollisionSystem();
-
+        
+        new SceneManager(_spriteBatch, new[] {
+            new Scene1("scene1", true, Content,
+            _drawingSystem,
+            _enemySystem,
+            _collisionSystem)
+        });
         SceneManager.Instance.LoadContent(_spriteBatch);
     }
 
@@ -60,11 +63,8 @@ public class Game1 : Game
         Globals.KeyBoardState = Keyboard.GetState();
         Globals.MouseState = Mouse.GetState();
 
-        // TODO: Move update stuff into Scene management
-        _drawingSystem.Update();
         _camera.Update(gameTime);
-        _collisionSystem.Update();
-        _enemySystem.Update();
+        SceneManager.Instance.CurrentScene.Update(gameTime);
         base.Update(gameTime);
 
         Globals.PreviousKeyBoardState = Globals.KeyBoardState;
@@ -75,10 +75,9 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.Black);
 
-        // TODO: Move draw stuff into Scene management
         var transformMatrix = _camera.GetViewMatrix();
         _spriteBatch.Begin(transformMatrix: transformMatrix, samplerState: SamplerState.PointClamp);
-        _drawingSystem.Draw();
+        SceneManager.Instance.CurrentScene.Draw(_spriteBatch);
         _spriteBatch.End();
 
         base.Draw(gameTime);

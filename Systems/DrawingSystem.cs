@@ -1,40 +1,33 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TDGame.Components;
 
 namespace TDGame.Systems;
-public class DrawingSystem
+public class DrawingSystem : System<Rendering>
 {
     private SpriteBatch _spriteBatch;
-    private List<Rendering> _components = new List<Rendering>();
-    private List<Rendering> _toRemove = new List<Rendering>();
 
-    public DrawingSystem(SpriteBatch spriteBatch)
+    public DrawingSystem(SpriteBatch spriteBatch) : base()
     {
         _spriteBatch = spriteBatch;
-        EntityManager.Instance.OnComponentAdded += Instance_OnComponentAdded;
-        EntityManager.Instance.OnComponentRemoved += Instance_OnComponentRemoved;
-        EntityManager.Instance.OnEntityRemoved += Instance_OnEntityRemoved;
     }
 
-    public void Update()
+    public override void Update()
     {
-        foreach (var component in _components)
+        for (int i = 0; i < _components.Count; i++)
         {
-            var transform = component.Entity.GetComponent<Transform>();
+            var transform = _components[i].Entity.GetComponent<Transform>();
             transform.Destination = new Rectangle(
                 (int)transform.Position.X,
                 (int)transform.Position.Y,
-                (int)Math.Floor(component.Source.Width * transform.Scale.X),
-                (int)Math.Floor(component.Source.Height * transform.Scale.Y)
+                (int)Math.Floor(_components[i].Source.Width * transform.Scale.X),
+                (int)Math.Floor(_components[i].Source.Height * transform.Scale.Y)
             );
         }
     }
 
-    public void Draw()
+    public override void Draw()
     {
         for (int i = 0; i < _components.Count; i++)
         {
@@ -54,40 +47,4 @@ public class DrawingSystem
             );
         }
     }
-    
-    #region privates
-    private void HandleRemove()
-    {
-        foreach (var item in _toRemove)
-            _components.Remove(item);
-        _toRemove.Clear();
-    }
-
-    private void Instance_OnComponentAdded(Entity entity, Component component)
-    {
-        if (component is Rendering)
-        {
-            var renderer = (Rendering)component;
-            if (!_components.Contains(renderer))
-                _components.Add(renderer);
-        }
-    }
-    
-    private void Instance_OnComponentRemoved(Entity entity, Component component)
-    {
-        if (component is Rendering)
-        {
-            var renderer = (Rendering)component;
-            if (_components.Contains(renderer))
-                _toRemove.Add(renderer);
-        }
-    }
-    
-    private void Instance_OnEntityRemoved(Entity entity)
-    {
-        var component = _components.FirstOrDefault(c => c.Entity.Id == entity.Id);
-        if (component != null)
-            _toRemove.Add(component);
-    }
-    #endregion
 }

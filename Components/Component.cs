@@ -1,4 +1,4 @@
-namespace TDGame;
+namespace TDGame.Components;
 public class Component
 {
     public int Id { get; }

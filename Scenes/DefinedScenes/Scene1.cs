@@ -6,17 +6,13 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using TDGame.Assets;
 using TDGame.Components;
+using TDGame.Systems;
 using TDGame.Util;
 
 namespace TDGame.Scenes;
 public class Scene1 : Scene
 {
-    public Scene1(string name, bool active, ContentManager content) : base(name, active, content) {}
-
-    public override void Draw(SpriteBatch spriteBatch)
-    {
-        throw new NotImplementedException();
-    }
+    public Scene1(string name, bool active, ContentManager content, params ISystem[] systems) : base(name, active, content, systems) {}
 
     public override void Initialize()
     {
@@ -98,6 +94,13 @@ public class Scene1 : Scene
 
     public override void Update(GameTime gameTime)
     {
-        throw new NotImplementedException();
+        for (int i = 0; i < Systems.Count; i++)
+            Systems[i].Update();
+    }
+    
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        for (int i = 0; i < Systems.Count; i++)
+            Systems[i].Draw();
     }
 }
