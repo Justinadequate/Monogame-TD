@@ -23,8 +23,8 @@ public abstract class System<T> : ISystem where T : Component
     
     private void HandleRemove()
     {
-        foreach (var item in _toRemove)
-            _components.Remove(item);
+        for (int i = 0; i < _toRemove.Count; i++)
+            _components.Remove(_toRemove[i]);
         _toRemove.Clear();
     }
 

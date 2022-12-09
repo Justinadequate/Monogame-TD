@@ -25,24 +25,24 @@ public class Scene1 : Scene
         var pos = Vector2.Zero;
         var tileSize = 16;
         var tileName = "";
-        for (int x = 0; x < Maps.Map2.GetLength(0); x++)
+        for (int x = 0; x < Maps.Map1.GetLength(0); x++)
         {
             var texTerrain = Content.Load<Texture2D>(Textures.Asset_AllTerrain);
-            for (int y = 0; y < Maps.Map2.GetLength(1); y++)
+            for (int y = 0; y < Maps.Map1.GetLength(1); y++)
             {
-                if (Maps.Map2[x,y].Terrain == Textures.SourceR_Grass)
+                if (Maps.Map1[x,y].Terrain == Textures.SourceR_Grass)
                     tileName = "tile_grass";
-                if (Maps.Map2[x,y].Terrain == Textures.SourceR_Mortar)
+                if (Maps.Map1[x,y].Terrain == Textures.SourceR_Mortar)
                     tileName = "tile_mortar";
-                if (Maps.Map2[x,y].Terrain == Textures.SourceR_Water)
+                if (Maps.Map1[x,y].Terrain == Textures.SourceR_Water)
                     tileName = "tile_water";
-                if (Maps.Map2[x,y].Terrain == Textures.SourceR_Dirt)
+                if (Maps.Map1[x,y].Terrain == Textures.SourceR_Dirt)
                     tileName = "tile_dirt";
 
                 Entity tile = new Entity(tileName);
                 var tileTransform = new Transform(pos);
-                var tileRendering = new Rendering(texTerrain, Maps.Map2[x,y].Terrain);
-                var tileTile = new Tile(Globals.DirectionsMap.GetValueOrDefault(Maps.Map2[x,y].MoveDirection));
+                var tileRendering = new Rendering(texTerrain, Maps.Map1[x,y].Terrain);
+                var tileTile = new Tile(Globals.DirectionsMap.GetValueOrDefault(Maps.Map1[x,y].MoveDirection));
                 tile.AddComponent(tileTransform);
                 tile.AddComponent(tileRendering);
                 tile.AddComponent(tileTile);

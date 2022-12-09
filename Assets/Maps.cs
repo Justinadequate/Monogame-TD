@@ -5,7 +5,7 @@ namespace TDGame.Assets
 {
     public static class Maps
     {
-        public static readonly MapTile[,] Map2 = new MapTile[,] {
+        public static readonly MapTile[,] Map1 = new MapTile[,] {
             {
                 new MapTile {Terrain = Textures.SourceR_Grass},
                 new MapTile {Terrain = Textures.SourceR_Grass},

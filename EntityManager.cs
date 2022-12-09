@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TDGame.Components;
 
 namespace TDGame;
@@ -54,11 +55,10 @@ public class EntityManager
         for (int i = 0; i < Entities.Count; i++)
         {
             Entities[i].Id = i;
+            var components = Entities[i].GetComponents().ToList();
 
-            foreach (var component in Entities[i].GetComponents())
-            {
-                component.Entity.Id = i;
-            }
+            for (int j = 0; j < components.Count; j++)
+                components[j].Entity.Id = i;
         }
     }
 }
