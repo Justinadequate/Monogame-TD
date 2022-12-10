@@ -12,10 +12,9 @@ public class UiSystem : System<UiItem>
         for (int i = 0; i < Components.Count; i++)
         {
             var collider = Components[i].Entity.GetComponent<Collider>();
-            var renderer = Components[i].Entity.GetComponent<Rendering>();
-            if (collider.Bounds.Intersects(
-                new Rectangle(Globals.MouseState.X, Globals.MouseState.Y, 1, 1)))
-                Debug.WriteLine("menu item touched");
+            // TODO: onclick/onhover/onwhatever
+            // UI might need its own entity structure to handle events
+            // try desperately to remember your frontend experience
         }
     }
     

@@ -17,24 +17,30 @@ public class MainMenu : Scene
     public override void LoadContent(SpriteBatch spriteBatch)
     {
         Entity button = new Entity("button");
-        var buttonTexture = Content.Load<Texture2D>(Textures.Asset_Button);
-        var rendering = new Rendering(buttonTexture);
+        var uiItem = new UiItem(UiItemType.Button, "test");
+        var texture = Content.Load<Texture2D>(Textures.Asset_Button);
+        var rendering = new Rendering(texture, Textures.SourceR_Button);
         var transform = new Transform(new Vector2(100, 100));
-        var components = new Component[]
-        {
-            transform,
-            rendering,
-            // TODO: collider wonky find better way to initialize
-            new Collider(new Rectangle(
+        var collider = new Collider(
+            new Rectangle(
                 (int)transform.Position.X,
                 (int)transform.Position.Y,
-                rendering.Source.Width,
-                rendering.Source.Height
-            ), new Vector2(100, 100)),
-            new UiItem(UiItemType.Button, "test")
-        };
+                (int)Math.Floor(rendering.Source.Width * transform.Scale.X),
+                (int)Math.Floor(rendering.Source.Height * transform.Scale.Y)
+            ), transform.Position, CollisionLayer.Ui, CollisionLayer.Ui);
+        button.AddComponents(rendering, transform, uiItem, collider);
 
-        button.AddComponents(components);
+        Entity cursor = new Entity("cursor");
+        uiItem = new UiItem(UiItemType.Cursor);
+        texture = Content.Load<Texture2D>(Textures.Asset_Cursor);
+        rendering = new Rendering(texture, Textures.SourceR_Cursor);
+        transform = new Transform(new Vector2(500, 500));
+        collider = new Collider(
+            new Rectangle(
+                (int)transform.Position.X,
+                (int)transform.Position.Y,
+                1, 1
+            ), transform.Position, CollisionLayer.Ui, CollisionLayer.Ui);
     }
 
     public override void Update(GameTime gameTime)

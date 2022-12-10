@@ -16,6 +16,7 @@ public class CollisionSystem : System<Collider>
             for (int j = 0; j < otherComponents.Count; j++)
             {
                 if (Components[i].Bounds.Intersects(otherComponents[j].Bounds)
+                    && Components[i].Mask == otherComponents[j].Layer
                     && Components[i].CollidingWith.FindIndex(e => e.Id == otherComponents[j].Entity.Id) == -1)
                 {
                     Components[i].CollidingWith.Add(otherComponents[j].Entity);

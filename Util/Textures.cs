@@ -19,5 +19,7 @@ public static class Textures
     #region UI
     public const string Asset_Button = "UI/button";
     public static Rectangle SourceR_Button = new Rectangle(1, 1, 100, 50);
+    public const string Asset_Cursor = "UI/cursor";
+    public static Rectangle SourceR_Cursor = new Rectangle(1, 1, 32, 32);
     #endregion
 }

@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using TDGame.Assets;
 using TDGame.Components;
+using TDGame.Models;
 using TDGame.Systems;
 using TDGame.Util;
 
@@ -57,11 +58,11 @@ public class Scene1 : Scene
                         (int)Math.Floor(tileRendering.Source.Width * tileTransform.Scale.X),
                         (int)Math.Floor(tileRendering.Source.Height * tileTransform.Scale.Y)
                     );
-                    var tilePos = tile.GetComponent<Transform>().Position;
-                    tile.AddComponents(new Collider(tileBounds, tilePos));
+                    var tilePos = tileTransform.Position;
+                    tile.AddComponents(new Collider(tileBounds, tilePos, CollisionLayer.World, CollisionLayer.Enemy));
 
                     if (tile.Name == "tile_mortar")
-                        tile.GetComponent<Tile>().IsStart = true;
+                        tileTile.IsStart = true;
                 }
 
                 pos.X += tileSize;
@@ -81,8 +82,7 @@ public class Scene1 : Scene
                 (int)monsterTransform.Position.Y,
                 (int)Math.Floor(monsterRendering.Source.Width * monsterTransform.Scale.X),
                 (int)Math.Floor(monsterRendering.Source.Height * monsterTransform.Scale.Y)
-            ),
-            monsterTransform.Position);
+            ),monsterTransform.Position, CollisionLayer.Enemy, CollisionLayer.World);
         monster.AddComponents(monsterTransform);
         monster.AddComponents(monsterRendering);
         monster.AddComponents(new Enemy(5, 2f));

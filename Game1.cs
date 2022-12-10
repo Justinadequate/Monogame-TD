@@ -13,7 +13,7 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-    private OrthographicCamera _camera;
+    // private OrthographicCamera _camera;
     private DrawingSystem _drawingSystem;
     private EnemySystem _enemySystem;
     private CollisionSystem _collisionSystem;
@@ -36,10 +36,10 @@ public class Game1 : Game
         _uiSystem = new UiSystem();
 
         var scenes = new Scene[] {
-            new MainMenu("main-menu", true, Content,
-                _drawingSystem,
-                _collisionSystem,
-                _uiSystem),
+            // new MainMenu("main-menu", true, Content,
+            //     _drawingSystem,
+            //     _collisionSystem,
+            //     _uiSystem),
             new Scene1("scene1", true, Content,
                 _drawingSystem,
                 _enemySystem,
@@ -49,8 +49,8 @@ public class Game1 : Game
 
         SceneManager.Instance.Initialize(_graphics);
         
-        var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
-        _camera = new OrthographicCamera(viewportAdapter);
+        // var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
+        // _camera = new OrthographicCamera(viewportAdapter);
 
         base.Initialize();
     }
@@ -68,7 +68,7 @@ public class Game1 : Game
         Globals.KeyBoardState = Keyboard.GetState();
         Globals.MouseState = Mouse.GetState();
 
-        _camera.Update(gameTime);
+        // _camera.Update(gameTime);
         SceneManager.Instance.Update(gameTime);
         base.Update(gameTime);
 
@@ -80,8 +80,8 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.Black);
 
-        var transformMatrix = _camera.GetViewMatrix();
-        _spriteBatch.Begin(transformMatrix: transformMatrix, samplerState: SamplerState.PointClamp);
+        // var transformMatrix = _camera.GetViewMatrix();
+        _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
         SceneManager.Instance.Draw(_spriteBatch);
         _spriteBatch.End();
 
