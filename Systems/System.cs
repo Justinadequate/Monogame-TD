@@ -5,8 +5,8 @@ using TDGame.Components;
 namespace TDGame.Systems;
 public abstract class System<T> : ISystem where T : Component
 {
-    public List<T> _components { get; }
-    public List<T> _toRemove { get; }
+    public List<T> Components { get; }
+    public List<T> ToRemove { get; }
 
     public System()
     {
@@ -14,8 +14,8 @@ public abstract class System<T> : ISystem where T : Component
         EntityManager.Instance.OnComponentRemoved += Instance_OnComponentRemoved;
         EntityManager.Instance.OnEntityRemoved += Instance_OnEntityRemoved;
 
-        _components = new List<T>();
-        _toRemove = new List<T>();
+        Components = new List<T>();
+        ToRemove = new List<T>();
     }
 
     public abstract void Update();
@@ -23,9 +23,9 @@ public abstract class System<T> : ISystem where T : Component
     
     private void HandleRemove()
     {
-        for (int i = 0; i < _toRemove.Count; i++)
-            _components.Remove(_toRemove[i]);
-        _toRemove.Clear();
+        for (int i = 0; i < ToRemove.Count; i++)
+            Components.Remove(ToRemove[i]);
+        ToRemove.Clear();
     }
 
     private void Instance_OnComponentAdded(Entity entity, Component addedComponent)
@@ -33,8 +33,8 @@ public abstract class System<T> : ISystem where T : Component
         if (addedComponent is T)
         {
             var component = (T)addedComponent;
-            if (!_components.Contains(component))
-                _components.Add(component);
+            if (!Components.Contains(component))
+                Components.Add(component);
         }
     }
     
@@ -43,15 +43,15 @@ public abstract class System<T> : ISystem where T : Component
         if (removedComponent is T)
         {
             var component = (T)removedComponent;
-            if (_components.Contains(component))
-                _toRemove.Add(component);
+            if (Components.Contains(component))
+                ToRemove.Add(component);
         }
     }
     
     private void Instance_OnEntityRemoved(Entity entity)
     {
-        var component = _components.FirstOrDefault(c => c.Entity.Id == entity.Id);
+        var component = Components.FirstOrDefault(c => c.Entity.Id == entity.Id);
         if (component != null)
-            _toRemove.Add(component);
+            ToRemove.Add(component);
     }
 }

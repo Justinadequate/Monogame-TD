@@ -17,6 +17,7 @@ public class Game1 : Game
     private DrawingSystem _drawingSystem;
     private EnemySystem _enemySystem;
     private CollisionSystem _collisionSystem;
+    private UiSystem _uiSystem;
 
     public Game1()
     {
@@ -27,11 +28,27 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        //* Add your initialization logic here
-        _graphics.PreferredBackBufferWidth = 16*50;
-        _graphics.PreferredBackBufferHeight = 16*50;
-        _graphics.ApplyChanges();
+        new EntityManager();
+        _spriteBatch = new SpriteBatch(GraphicsDevice);
+        _drawingSystem = new DrawingSystem(_spriteBatch);
+        _enemySystem = new EnemySystem();
+        _collisionSystem = new CollisionSystem();
+        _uiSystem = new UiSystem();
 
+        var scenes = new Scene[] {
+            new MainMenu("main-menu", true, Content,
+                _drawingSystem,
+                _collisionSystem,
+                _uiSystem),
+            new Scene1("scene1", true, Content,
+                _drawingSystem,
+                _enemySystem,
+                _collisionSystem)
+        };
+        new SceneManager(_spriteBatch, scenes);
+
+        SceneManager.Instance.Initialize(_graphics);
+        
         var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
         _camera = new OrthographicCamera(viewportAdapter);
 
@@ -40,18 +57,6 @@ public class Game1 : Game
 
     protected override void LoadContent()
     {
-        _spriteBatch = new SpriteBatch(GraphicsDevice);
-        new EntityManager();
-        _drawingSystem = new DrawingSystem(_spriteBatch);
-        _enemySystem = new EnemySystem();
-        _collisionSystem = new CollisionSystem();
-        
-        new SceneManager(_spriteBatch, new[] {
-            new Scene1("scene1", true, Content,
-            _drawingSystem,
-            _enemySystem,
-            _collisionSystem)
-        });
         SceneManager.Instance.LoadContent(_spriteBatch);
     }
 
@@ -64,7 +69,7 @@ public class Game1 : Game
         Globals.MouseState = Mouse.GetState();
 
         _camera.Update(gameTime);
-        SceneManager.Instance.CurrentScene.Update(gameTime);
+        SceneManager.Instance.Update(gameTime);
         base.Update(gameTime);
 
         Globals.PreviousKeyBoardState = Globals.KeyBoardState;
@@ -77,7 +82,7 @@ public class Game1 : Game
 
         var transformMatrix = _camera.GetViewMatrix();
         _spriteBatch.Begin(transformMatrix: transformMatrix, samplerState: SamplerState.PointClamp);
-        SceneManager.Instance.CurrentScene.Draw(_spriteBatch);
+        SceneManager.Instance.Draw(_spriteBatch);
         _spriteBatch.End();
 
         base.Draw(gameTime);

@@ -17,10 +17,10 @@ public class SceneManager
         _scenes = scenes.ToDictionary(s => s.Name);
     }
 
-    public void Initialize()
+    public void Initialize(GraphicsDeviceManager graphics)
     {
         if (CurrentScene is not null)
-            CurrentScene.Initialize();
+            CurrentScene.Initialize(graphics);
     }
 
     public void LoadContent(SpriteBatch spriteBatch)

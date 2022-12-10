@@ -9,24 +9,24 @@ public class CollisionSystem : System<Collider>
     public override void Update()
     {
         List<Collider> otherComponents = new List<Collider>();
-        for (int i = 0; i < _components.Count; i++)
+        for (int i = 0; i < Components.Count; i++)
         {
-            otherComponents.AddRange(_components);
+            otherComponents.AddRange(Components);
             otherComponents.RemoveAt(i);
             for (int j = 0; j < otherComponents.Count; j++)
             {
-                if (_components[i].Bounds.Intersects(otherComponents[j].Bounds)
-                    && _components[i].CollidingWith.FindIndex(e => e.Id == otherComponents[j].Entity.Id) == -1)
+                if (Components[i].Bounds.Intersects(otherComponents[j].Bounds)
+                    && Components[i].CollidingWith.FindIndex(e => e.Id == otherComponents[j].Entity.Id) == -1)
                 {
-                    _components[i].CollidingWith.Add(otherComponents[j].Entity);
-                    otherComponents[j].CollidingWith.Add(_components[i].Entity);
+                    Components[i].CollidingWith.Add(otherComponents[j].Entity);
+                    otherComponents[j].CollidingWith.Add(Components[i].Entity);
                 }
 
-                if (!_components[i].Bounds.Intersects(otherComponents[j].Bounds)
-                    && _components[i].CollidingWith.FindIndex(e => e.Id == otherComponents[j].Entity.Id) != -1)
+                if (!Components[i].Bounds.Intersects(otherComponents[j].Bounds)
+                    && Components[i].CollidingWith.FindIndex(e => e.Id == otherComponents[j].Entity.Id) != -1)
                 {
-                    _components[i].CollidingWith.Remove(otherComponents[j].Entity);
-                    otherComponents[j].CollidingWith.Remove(_components[i].Entity);
+                    Components[i].CollidingWith.Remove(otherComponents[j].Entity);
+                    otherComponents[j].CollidingWith.Remove(Components[i].Entity);
                 }
             }
             otherComponents.Clear();

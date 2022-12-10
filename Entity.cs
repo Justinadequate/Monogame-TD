@@ -29,12 +29,15 @@ public class Entity
         return true;
     }
 
-    public void AddComponent(Component component)
+    public void AddComponents(params Component[] components)
     {
-        if (!_components.Contains(component))
-            _components.Add(component);
-        EntityManager.Instance.ComponentAdded(this, component);
-        component.Entity = this;
+        for (int i = 0; i < components.Length; i++)
+        {
+            if (!_components.Contains(components[i]))
+                _components.Add(components[i]);
+            EntityManager.Instance.ComponentAdded(this, components[i]);
+            components[i].Entity = this;
+        }
     }
 
     public void RemoveComponent(Component component)

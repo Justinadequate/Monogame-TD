@@ -24,7 +24,7 @@ public abstract class Scene : IScene
             Systems.AddRange(systems);
     }
 
-    public abstract void Initialize();
+    public abstract void Initialize(GraphicsDeviceManager graphics);
     public abstract void LoadContent(SpriteBatch spriteBatch);
     public abstract void UnloadContent();
     public abstract void Update(GameTime gameTime);

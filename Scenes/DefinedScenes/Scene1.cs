@@ -14,9 +14,11 @@ public class Scene1 : Scene
 {
     public Scene1(string name, bool active, ContentManager content, params ISystem[] systems) : base(name, active, content, systems) {}
 
-    public override void Initialize()
+    public override void Initialize(GraphicsDeviceManager graphics)
     {
-        throw new NotImplementedException();
+        graphics.PreferredBackBufferWidth = 16*50;
+        graphics.PreferredBackBufferHeight = 16*50;
+        graphics.ApplyChanges();
     }
 
     public override void LoadContent(SpriteBatch spriteBatch)
@@ -43,9 +45,9 @@ public class Scene1 : Scene
                 var tileTransform = new Transform(pos);
                 var tileRendering = new Rendering(texTerrain, Maps.Map1[x,y].Terrain);
                 var tileTile = new Tile(Globals.DirectionsMap.GetValueOrDefault(Maps.Map1[x,y].MoveDirection));
-                tile.AddComponent(tileTransform);
-                tile.AddComponent(tileRendering);
-                tile.AddComponent(tileTile);
+                tile.AddComponents(tileTransform);
+                tile.AddComponents(tileRendering);
+                tile.AddComponents(tileTile);
                 
                 if (tile.Name == "tile_dirt" || tile.Name == "tile_mortar")
                 {
@@ -56,7 +58,7 @@ public class Scene1 : Scene
                         (int)Math.Floor(tileRendering.Source.Height * tileTransform.Scale.Y)
                     );
                     var tilePos = tile.GetComponent<Transform>().Position;
-                    tile.AddComponent(new Collider(tileBounds, tilePos));
+                    tile.AddComponents(new Collider(tileBounds, tilePos));
 
                     if (tile.Name == "tile_mortar")
                         tile.GetComponent<Tile>().IsStart = true;
@@ -81,10 +83,10 @@ public class Scene1 : Scene
                 (int)Math.Floor(monsterRendering.Source.Height * monsterTransform.Scale.Y)
             ),
             monsterTransform.Position);
-        monster.AddComponent(monsterTransform);
-        monster.AddComponent(monsterRendering);
-        monster.AddComponent(new Enemy(5, 2f));
-        monster.AddComponent(monsterCollider);
+        monster.AddComponents(monsterTransform);
+        monster.AddComponents(monsterRendering);
+        monster.AddComponents(new Enemy(5, 2f));
+        monster.AddComponents(monsterCollider);
     }
 
     public override void UnloadContent()
