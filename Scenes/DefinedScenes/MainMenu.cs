@@ -16,6 +16,8 @@ public class MainMenu : Scene
 
     public override void LoadContent(SpriteBatch spriteBatch)
     {
+        // TODO: button and cursor rendering at given origin instead of given position why
+        // maybe nothing is rendering in the right place
         Entity button = new Entity("button");
         var uiItem = new UiItem(UiItemType.Button, "test");
         var texture = Content.Load<Texture2D>(Textures.Asset_Button);
@@ -41,6 +43,7 @@ public class MainMenu : Scene
                 (int)transform.Position.Y,
                 1, 1
             ), transform.Position, CollisionLayer.Ui, CollisionLayer.Ui);
+        cursor.AddComponents(rendering, transform, uiItem, collider);
     }
 
     public override void Update(GameTime gameTime)

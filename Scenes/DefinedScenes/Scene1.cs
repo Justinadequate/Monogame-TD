@@ -25,7 +25,7 @@ public class Scene1 : Scene
     public override void LoadContent(SpriteBatch spriteBatch)
     {
         //* Load Map
-        var pos = Vector2.Zero;
+        var pos = new Vector2(10, 10);
         var tileSize = 16;
         var tileName = "";
         for (int x = 0; x < Maps.Map1.GetLength(0); x++)
@@ -67,7 +67,7 @@ public class Scene1 : Scene
 
                 pos.X += tileSize;
             }
-            pos.X = 0;
+            pos.X = 10;
             pos.Y += tileSize;
         }
 

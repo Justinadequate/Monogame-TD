@@ -17,6 +17,7 @@ public class DrawingSystem : System<Rendering>
     {
         for (int i = 0; i < Components.Count; i++)
         {
+            // TODO: Move destination rectangle into renderer component?
             var transform = Components[i].Entity.GetComponent<Transform>();
             transform.Destination = new Rectangle(
                 (int)transform.Position.X,
