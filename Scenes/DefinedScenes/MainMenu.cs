@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -20,27 +19,22 @@ public class MainMenu : Scene
         var uiItem = new UiItem(UiItemType.Button, "test");
         var texture = Content.Load<Texture2D>(Textures.Asset_Button);
         var rendering = new Rendering(texture, Textures.SourceR_Button);
-        var transform = new Transform(new Vector2(100, 100));
+        var transform = new Transform(new Point(100, 100), rendering.Source.Size);
         var collider = new Collider(
-            new Rectangle(
-                (int)transform.Position.X,
-                (int)transform.Position.Y,
-                (int)Math.Floor(rendering.Source.Width * transform.Scale.X),
-                (int)Math.Floor(rendering.Source.Height * transform.Scale.Y)
-            ), transform.Position, CollisionLayer.Ui, CollisionLayer.Ui);
+            transform.Destination, CollisionLayer.Ui, CollisionLayer.Ui);
         button.AddComponents(rendering, transform, uiItem, collider);
 
         Entity cursor = new Entity("cursor");
         uiItem = new UiItem(UiItemType.Cursor);
         texture = Content.Load<Texture2D>(Textures.Asset_Cursor);
         rendering = new Rendering(texture, Textures.SourceR_Cursor);
-        transform = new Transform(new Vector2(500, 500));
+        transform = new Transform(new Point(500, 500), rendering.Source.Size);
         collider = new Collider(
             new Rectangle(
-                (int)transform.Position.X,
-                (int)transform.Position.Y,
+                (int)transform.Destination.X,
+                (int)transform.Destination.Y,
                 1, 1
-            ), transform.Position, CollisionLayer.Ui, CollisionLayer.Ui);
+            ), CollisionLayer.Ui, CollisionLayer.Ui);
         cursor.AddComponents(rendering, transform, uiItem, collider);
     }
 

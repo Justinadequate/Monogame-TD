@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using TDGame.Components;
 
 namespace TDGame.Systems;
@@ -16,10 +17,12 @@ public class EnemySystem : System<Enemy>
                 continue;
             
             if (collider.CollidingWith[0].TryGetComponent<Tile>(out var tile))
-                transform.Position += tile.MoveDirection * Components[i].MoveSpeed * deltaTime;
+            {
+                var newPosition = transform.Destination.Location.ToVector2() + tile.MoveDirection * Components[i].MoveSpeed * deltaTime;
+                transform.Destination = new Rectangle(newPosition.ToPoint(), transform.Destination.Size);
+            }
 
             collider.Bounds = transform.Destination;
-            collider.Position = transform.Position;
         }
     }
 

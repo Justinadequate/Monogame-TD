@@ -13,20 +13,7 @@ public class DrawingSystem : System<Rendering>
         _spriteBatch = spriteBatch;
     }
 
-    public override void Update(float deltaTime)
-    {
-        for (int i = 0; i < Components.Count; i++)
-        {
-            // TODO: Move destination rectangle into renderer component?
-            var transform = Components[i].Entity.GetComponent<Transform>();
-            transform.Destination = new Rectangle(
-                (int)transform.Position.X,
-                (int)transform.Position.Y,
-                (int)Math.Floor(Components[i].Source.Width * transform.Scale.X),
-                (int)Math.Floor(Components[i].Source.Height * transform.Scale.Y)
-            );
-        }
-    }
+    public override void Update(float deltaTime) {}
 
     public override void Draw()
     {

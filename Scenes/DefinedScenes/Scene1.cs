@@ -43,8 +43,8 @@ public class Scene1 : Scene
                     tileName = "tile_dirt";
 
                 Entity tile = new Entity(tileName);
-                var tileTransform = new Transform(pos);
                 var tileRendering = new Rendering(texTerrain, Maps.Map1[x,y].Terrain);
+                var tileTransform = new Transform(pos.ToPoint(), tileRendering.Source.Size);
                 var tileTile = new Tile(Globals.DirectionsMap.GetValueOrDefault(Maps.Map1[x,y].MoveDirection));
                 tile.AddComponents(tileTransform);
                 tile.AddComponents(tileRendering);
@@ -52,14 +52,7 @@ public class Scene1 : Scene
                 
                 if (tile.Name == "tile_dirt" || tile.Name == "tile_mortar")
                 {
-                    var tileBounds = new Rectangle(
-                        (int)tileTransform.Position.X,
-                        (int)tileTransform.Position.Y,
-                        (int)Math.Floor(tileRendering.Source.Width * tileTransform.Scale.X),
-                        (int)Math.Floor(tileRendering.Source.Height * tileTransform.Scale.Y)
-                    );
-                    var tilePos = tileTransform.Position;
-                    tile.AddComponents(new Collider(tileBounds, tilePos, CollisionLayer.World, CollisionLayer.Enemy));
+                    tile.AddComponents(new Collider(tileTransform.Destination, CollisionLayer.World, CollisionLayer.Enemy));
 
                     if (tile.Name == "tile_mortar")
                         tileTile.IsStart = true;
@@ -72,17 +65,13 @@ public class Scene1 : Scene
         }
 
         Entity monster = new Entity("monster");
+        var monsterSprite = Content.Load<Texture2D>(Textures.Asset_Monster1);
         var monsterStart = EntityManager.Instance.GetEntities().FirstOrDefault(e => e.Name == "tile_mortar")
-            .GetComponent<Transform>().Position;
-        var monsterTransform = new Transform(monsterStart);
+            .GetComponent<Transform>().Destination.Location;
+        var monsterTransform = new Transform(monsterStart, monsterSprite.Bounds.Size);
         var monsterRendering = new Rendering(Content.Load<Texture2D>(Textures.Asset_Monster1), Textures.SourceR_Monster);
         var monsterCollider = new Collider(
-            new Rectangle(
-                (int)monsterTransform.Position.X,
-                (int)monsterTransform.Position.Y,
-                (int)Math.Floor(monsterRendering.Source.Width * monsterTransform.Scale.X),
-                (int)Math.Floor(monsterRendering.Source.Height * monsterTransform.Scale.Y)
-            ),monsterTransform.Position, CollisionLayer.Enemy, CollisionLayer.World);
+            monsterTransform.Destination, CollisionLayer.Enemy, CollisionLayer.World);
         monster.AddComponents(monsterTransform);
         monster.AddComponents(monsterRendering);
         monster.AddComponents(new Enemy(5, 200f));

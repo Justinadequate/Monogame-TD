@@ -22,16 +22,11 @@ public class UiSystem : System<UiItem>
 
             if (Components[i].ItemType == UiItemType.Cursor)
             {
-                // TODO: this but better
-                transform.Position = collider.Position = Globals.MouseState.Position.ToVector2();
-                collider.Bounds = new Rectangle(
-                    (int)transform.Position.X,
-                    (int)transform.Position.Y,
-                    collider.Bounds.Width,
-                    collider.Bounds.Height
-                );
+                var newPosition = Globals.MouseState.Position;
+                transform.Destination = new Rectangle(newPosition, transform.Destination.Size);
+                collider.Bounds = new Rectangle(newPosition, collider.Bounds.Size);
                 if (Globals.MouseState.LeftButton == ButtonState.Pressed)
-                    Debug.WriteLine(transform.Position);
+                    Debug.WriteLine(transform.Destination.Location);
             }
             else if (Components[i].ItemType == UiItemType.Button)
             {
