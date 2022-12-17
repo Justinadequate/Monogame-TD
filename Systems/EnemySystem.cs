@@ -5,7 +5,7 @@ public class EnemySystem : System<Enemy>
 {
     public EnemySystem() : base() {}
 
-    public override void Update()
+    public override void Update(float deltaTime)
     {
         for (int i = 0; i < Components.Count; i++)
         {
@@ -16,7 +16,7 @@ public class EnemySystem : System<Enemy>
                 continue;
             
             if (collider.CollidingWith[0].TryGetComponent<Tile>(out var tile))
-                transform.Position += tile.MoveDirection * Components[i].MoveSpeed;
+                transform.Position += tile.MoveDirection * Components[i].MoveSpeed * deltaTime;
 
             collider.Bounds = transform.Destination;
             collider.Position = transform.Position;

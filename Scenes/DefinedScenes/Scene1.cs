@@ -25,7 +25,7 @@ public class Scene1 : Scene
     public override void LoadContent(SpriteBatch spriteBatch)
     {
         //* Load Map
-        var pos = new Vector2(10, 10);
+        var pos = Vector2.Zero;
         var tileSize = 16;
         var tileName = "";
         for (int x = 0; x < Maps.Map1.GetLength(0); x++)
@@ -67,7 +67,7 @@ public class Scene1 : Scene
 
                 pos.X += tileSize;
             }
-            pos.X = 10;
+            pos.X = 0;
             pos.Y += tileSize;
         }
 
@@ -85,7 +85,7 @@ public class Scene1 : Scene
             ),monsterTransform.Position, CollisionLayer.Enemy, CollisionLayer.World);
         monster.AddComponents(monsterTransform);
         monster.AddComponents(monsterRendering);
-        monster.AddComponents(new Enemy(5, 2f));
+        monster.AddComponents(new Enemy(5, 200f));
         monster.AddComponents(monsterCollider);
     }
 
@@ -94,10 +94,10 @@ public class Scene1 : Scene
         throw new NotImplementedException();
     }
 
-    public override void Update(GameTime gameTime)
+    public override void Update(float deltaTime)
     {
         for (int i = 0; i < Systems.Count; i++)
-            Systems[i].Update();
+            Systems[i].Update(deltaTime);
     }
     
     public override void Draw(SpriteBatch spriteBatch)

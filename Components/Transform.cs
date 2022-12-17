@@ -7,6 +7,7 @@ public class Transform : Component
     public Vector2 Scale { get; set; }
     public Rectangle Destination { get; set; }
     public float Rotation { get; set; }
+    // TODO: origin here?
 
     public Transform(Vector2 position, bool active = true) : base(active)
     {

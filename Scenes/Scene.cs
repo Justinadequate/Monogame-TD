@@ -27,6 +27,6 @@ public abstract class Scene : IScene
     public abstract void Initialize(GraphicsDeviceManager graphics);
     public abstract void LoadContent(SpriteBatch spriteBatch);
     public abstract void UnloadContent();
-    public abstract void Update(GameTime gameTime);
+    public abstract void Update(float deltaTime);
     public abstract void Draw(SpriteBatch spriteBatch);
 }

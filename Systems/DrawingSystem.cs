@@ -13,7 +13,7 @@ public class DrawingSystem : System<Rendering>
         _spriteBatch = spriteBatch;
     }
 
-    public override void Update()
+    public override void Update(float deltaTime)
     {
         for (int i = 0; i < Components.Count; i++)
         {
@@ -39,10 +39,7 @@ public class DrawingSystem : System<Rendering>
                 sourceRectangle: Components[i].Source,
                 color: Components[i].DrawColor,
                 rotation: transform.Rotation,
-                origin: new Vector2(
-                    transform.Destination.Width/2,
-                    transform.Destination.Height/2
-                ),
+                origin: Vector2.Zero,
                 effects: SpriteEffects.None,
                 layerDepth: Components[i].Layer
             );

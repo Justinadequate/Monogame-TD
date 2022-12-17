@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Diagnostics;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using TDGame.Components;
 using TDGame.Models;
@@ -9,7 +10,7 @@ public class UiSystem : System<UiItem>
 {
     public UiSystem() : base() {}
 
-    public override void Update()
+    public override void Update(float deltaTime)
     {
         for (int i = 0; i < Components.Count; i++)
         {
@@ -21,7 +22,14 @@ public class UiSystem : System<UiItem>
 
             if (Components[i].ItemType == UiItemType.Cursor)
             {
+                // TODO: this but better
                 transform.Position = collider.Position = Globals.MouseState.Position.ToVector2();
+                collider.Bounds = new Rectangle(
+                    (int)transform.Position.X,
+                    (int)transform.Position.Y,
+                    collider.Bounds.Width,
+                    collider.Bounds.Height
+                );
                 if (Globals.MouseState.LeftButton == ButtonState.Pressed)
                     Debug.WriteLine(transform.Position);
             }

@@ -2,6 +2,6 @@ namespace TDGame.Systems;
 
 public interface ISystem
 {
-    void Update();
+    void Update(float deltaTime);
     void Draw();
 }

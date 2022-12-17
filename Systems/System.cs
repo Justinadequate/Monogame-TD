@@ -18,7 +18,7 @@ public abstract class System<T> : ISystem where T : Component
         ToRemove = new List<T>();
     }
 
-    public abstract void Update();
+    public abstract void Update(float deltaTime);
     public abstract void Draw();
     
     private void HandleRemove()

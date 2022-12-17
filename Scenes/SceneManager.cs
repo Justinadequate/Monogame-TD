@@ -32,7 +32,7 @@ public class SceneManager
     public void Update(GameTime gameTime)
     {
         if (CurrentScene is not null)
-            CurrentScene.Update(gameTime);
+            CurrentScene.Update((float)(gameTime.ElapsedGameTime.TotalMilliseconds / 1000.0));
     }
 
     public void Draw(SpriteBatch spriteBatch)

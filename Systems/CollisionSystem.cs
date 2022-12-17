@@ -6,7 +6,7 @@ public class CollisionSystem : System<Collider>
 {
     public CollisionSystem() : base() {}
 
-    public override void Update()
+    public override void Update(float deltaTime)
     {
         List<Collider> otherComponents = new List<Collider>();
         for (int i = 0; i < Components.Count; i++)
