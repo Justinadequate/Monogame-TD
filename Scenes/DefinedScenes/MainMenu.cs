@@ -1,7 +1,9 @@
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using TDGame.Components;
+using TDGame.Components.Ui;
 using TDGame.Models;
 using TDGame.Systems;
 using TDGame.Util;
@@ -22,7 +24,7 @@ public class MainMenu : Scene
         var transform = new Transform(new Point(100, 100), rendering.Source.Size);
         var collider = new Collider(
             transform.Destination, CollisionLayer.Ui, CollisionLayer.Ui);
-        button.AddComponents(rendering, transform, uiItem, collider);
+        button.AddComponents(rendering, transform, uiItem, collider, new Clickable(e => Debug.WriteLine("Clicked!")));
 
         Entity cursor = new Entity("cursor");
         uiItem = new UiItem(UiItemType.Cursor);

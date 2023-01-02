@@ -36,10 +36,10 @@ public class Game1 : Game
         _uiSystem = new UiSystem();
 
         var scenes = new Scene[] {
-            // new MainMenu("main-menu", true, Content,
-            //     _drawingSystem,
-            //     _collisionSystem,
-            //     _uiSystem),
+            new MainMenu("main-menu", true, Content,
+                _drawingSystem,
+                _collisionSystem,
+                _uiSystem),
             new Scene1("scene1", true, Content,
                 _drawingSystem,
                 _enemySystem,

@@ -1,6 +1,6 @@
 using TDGame.Models;
 
-namespace TDGame.Components;
+namespace TDGame.Components.Ui;
 public class UiItem : Component
 {
     public UiItemType ItemType { get; set; }

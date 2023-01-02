@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using TDGame.Components;
+using TDGame.Components.Ui;
 using TDGame.Models;
 
 namespace TDGame.Systems;
@@ -16,9 +17,6 @@ public class UiSystem : System<UiItem>
         {
             var collider = Components[i].Entity.GetComponent<Collider>();
             var transform = Components[i].Entity.GetComponent<Transform>();
-            // TODO: onclick/onhover/onwhatever
-            // UI might need its own entity structure to handle events
-            // try desperately to remember your frontend experience
 
             if (Components[i].ItemType == UiItemType.Cursor)
             {
@@ -30,8 +28,9 @@ public class UiSystem : System<UiItem>
             }
             else if (Components[i].ItemType == UiItemType.Button)
             {
-                if (collider.CollidingWith.Any(e => e.GetComponent<UiItem>().ItemType == UiItemType.Cursor))
-                    Debug.WriteLine("button touch");
+                if (collider.CollidingWith.Any(e => e.GetComponent<UiItem>().ItemType == UiItemType.Cursor) &&
+                    Globals.MouseState.LeftButton == ButtonState.Pressed)
+                    collider.Entity.GetComponent<Clickable>().OnClick.Invoke(collider.Entity);
             }
         }
     }
