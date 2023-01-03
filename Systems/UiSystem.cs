@@ -23,14 +23,12 @@ public class UiSystem : System<UiItem>
                 var newPosition = Globals.MouseState.Position;
                 transform.Destination = new Rectangle(newPosition, transform.Destination.Size);
                 collider.Bounds = new Rectangle(newPosition, collider.Bounds.Size);
-                if (Globals.MouseState.LeftButton == ButtonState.Pressed)
-                    Debug.WriteLine(transform.Destination.Location);
             }
             else if (Components[i].ItemType == UiItemType.Button)
             {
                 if (collider.CollidingWith.Any(e => e.GetComponent<UiItem>().ItemType == UiItemType.Cursor) &&
                     Globals.MouseState.LeftButton == ButtonState.Pressed)
-                    collider.Entity.GetComponent<Clickable>().OnClick.Invoke(collider.Entity);
+                    collider.Entity.GetComponent<Clickable>().OnClick.Invoke();
             }
         }
     }

@@ -24,7 +24,7 @@ public class MainMenu : Scene
         var transform = new Transform(new Point(100, 100), rendering.Source.Size);
         var collider = new Collider(
             transform.Destination, CollisionLayer.Ui, CollisionLayer.Ui);
-        button.AddComponents(rendering, transform, uiItem, collider, new Clickable(e => Debug.WriteLine("Clicked!")));
+        button.AddComponents(rendering, transform, uiItem, collider, new Clickable(() => SceneManager.Instance.ChangeScene("scene1")));
 
         Entity cursor = new Entity("cursor");
         uiItem = new UiItem(UiItemType.Cursor);
@@ -54,6 +54,10 @@ public class MainMenu : Scene
 
     public override void UnloadContent()
     {
-        throw new System.NotImplementedException();
+        var entities = EntityManager.Instance.GetEntities();
+        for (int i = 0; i < entities.Count; i++)
+            EntityManager.Instance.RemoveEntity(entities[i]);
+        
+        Content.Unload();
     }
 }

@@ -23,7 +23,7 @@ public class Game1 : Game
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
-        IsMouseVisible = true;
+        IsMouseVisible = false;
     }
 
     protected override void Initialize()
@@ -45,9 +45,9 @@ public class Game1 : Game
                 _enemySystem,
                 _collisionSystem)
         };
-        new SceneManager(_spriteBatch, scenes);
+        new SceneManager(_graphics, _spriteBatch, scenes);
 
-        SceneManager.Instance.Initialize(_graphics);
+        SceneManager.Instance.Initialize();
         
         // var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
         // _camera = new OrthographicCamera(viewportAdapter);
@@ -57,7 +57,7 @@ public class Game1 : Game
 
     protected override void LoadContent()
     {
-        SceneManager.Instance.LoadContent(_spriteBatch);
+        SceneManager.Instance.LoadContent();
     }
 
     protected override void Update(GameTime gameTime)
@@ -82,7 +82,7 @@ public class Game1 : Game
 
         // var transformMatrix = _camera.GetViewMatrix();
         _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-        SceneManager.Instance.Draw(_spriteBatch);
+        SceneManager.Instance.Draw();
         _spriteBatch.End();
 
         base.Draw(gameTime);
