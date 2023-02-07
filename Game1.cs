@@ -5,6 +5,7 @@ using MonoGame.Extended;
 using MonoGame.Extended.ViewportAdapters;
 using TDGame.Extensions;
 using TDGame.Scenes;
+using TDGame.Scenes.DefinedScenes;
 using TDGame.Systems;
 
 namespace TDGame;
@@ -43,7 +44,8 @@ public class Game1 : Game
             new Scene1("scene1", true, Content,
                 _drawingSystem,
                 _enemySystem,
-                _collisionSystem)
+                _collisionSystem),
+            new EditorScene("editor", true, Content)
         };
         new SceneManager(_graphics, _spriteBatch, scenes);
 

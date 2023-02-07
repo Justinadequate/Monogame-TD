@@ -10,15 +10,15 @@ using TDGame.Models;
 using TDGame.Systems;
 using TDGame.Util;
 
-namespace TDGame.Scenes;
+namespace TDGame.Scenes.DefinedScenes;
 public class Scene1 : Scene
 {
     public Scene1(string name, bool active, ContentManager content, params ISystem[] systems) : base(name, active, content, systems) {}
 
     public override void Initialize(GraphicsDeviceManager graphics)
     {
-        graphics.PreferredBackBufferWidth = 16*50;
-        graphics.PreferredBackBufferHeight = 16*50;
+        graphics.PreferredBackBufferWidth = 16 * Maps.Map1.GetLength(0);
+        graphics.PreferredBackBufferHeight = 16 * Maps.Map1.GetLength(1);
         graphics.ApplyChanges();
     }
 

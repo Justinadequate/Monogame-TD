@@ -17,14 +17,22 @@ public class MainMenu : Scene
 
     public override void LoadContent(SpriteBatch spriteBatch)
     {
-        Entity button = new Entity("button");
+        Entity button1 = new Entity("button");
         var uiItem = new UiItem(UiItemType.Button, "test");
         var texture = Content.Load<Texture2D>(Textures.Asset_Button);
         var rendering = new Rendering(texture, Textures.SourceR_Button);
         var transform = new Transform(new Point(100, 100), rendering.Source.Size);
         var collider = new Collider(
             transform.Destination, CollisionLayer.Ui, CollisionLayer.Ui);
-        button.AddComponents(rendering, transform, uiItem, collider, new Clickable(() => SceneManager.Instance.ChangeScene("scene1")));
+        button1.AddComponents(rendering, transform, uiItem, collider, new Clickable(() => SceneManager.Instance.ChangeScene("scene1")));
+        
+        // TODO: this block causes button1 to disappear?
+        Entity button2 = new Entity("button");
+        uiItem = new UiItem(UiItemType.Button, "test2");
+        transform = new Transform(new Point(600, 100), rendering.Source.Size);
+        collider = new Collider(
+            transform.Destination, CollisionLayer.Ui, CollisionLayer.Ui);
+        button2.AddComponents(rendering, transform, uiItem, collider, new Clickable(() => SceneManager.Instance.ChangeScene("editor")));
 
         Entity cursor = new Entity("cursor");
         uiItem = new UiItem(UiItemType.Cursor);
