@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using TDGame.Components;
+using TDGame.Util;
 
 namespace TDGame.Systems;
 public class CollisionSystem : System<Collider>
 {
-    public CollisionSystem() : base() {}
+    public CollisionSystem() : base(SystemTypes.Collision) {}
 
     public override void Update(float deltaTime)
     {

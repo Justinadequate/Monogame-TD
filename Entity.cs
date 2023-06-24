@@ -29,7 +29,7 @@ public class Entity
         return true;
     }
 
-    public void AddComponents(params Component[] components)
+    public Entity AddComponents(params Component[] components)
     {
         for (int i = 0; i < components.Length; i++)
         {
@@ -38,6 +38,8 @@ public class Entity
             EntityManager.Instance.ComponentAdded(this, components[i]);
             components[i].Entity = this;
         }
+
+        return this;
     }
 
     public void RemoveComponent(Component component)

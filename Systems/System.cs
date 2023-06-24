@@ -5,11 +5,14 @@ using TDGame.Components;
 namespace TDGame.Systems;
 public abstract class System<T> : ISystem where T : Component
 {
+    public string Type { get; }
     public List<T> Components { get; }
     public List<T> ToRemove { get; }
 
-    public System()
+    public System(string type)
     {
+        Type = type;
+        
         EntityManager.Instance.OnComponentAdded += Instance_OnComponentAdded;
         EntityManager.Instance.OnComponentRemoved += Instance_OnComponentRemoved;
         EntityManager.Instance.OnEntityRemoved += Instance_OnEntityRemoved;

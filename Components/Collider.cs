@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using TDGame.Models;
+using TDGame.Util;
 
 namespace TDGame.Components;
 public class Collider : Component
@@ -10,7 +11,7 @@ public class Collider : Component
     public CollisionLayer Layer { get; set; }
     public CollisionLayer Mask { get; set; }
 
-    public Collider(Rectangle bounds, CollisionLayer layer, CollisionLayer mask, bool active = true) : base(active)
+    public Collider(Rectangle bounds, CollisionLayer layer, CollisionLayer mask, bool active = true) : base(ComponentTypes.Collider, active)
     {
         Bounds = bounds;
         Layer = layer;

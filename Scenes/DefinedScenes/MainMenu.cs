@@ -17,35 +17,44 @@ public class MainMenu : Scene
 
     public override void LoadContent(SpriteBatch spriteBatch)
     {
-        Entity button1 = new Entity("button");
-        var uiItem = new UiItem(UiItemType.Button, "test");
         var texture = Content.Load<Texture2D>(Textures.Asset_Button);
         var rendering = new Rendering(texture, Textures.SourceR_Button);
         var transform = new Transform(new Point(100, 100), rendering.Source.Size);
-        var collider = new Collider(
-            transform.Destination, CollisionLayer.Ui, CollisionLayer.Ui);
-        button1.AddComponents(rendering, transform, uiItem, collider, new Clickable(() => SceneManager.Instance.ChangeScene("scene1")));
-        
-        // TODO: this block causes button1 to disappear?
-        Entity button2 = new Entity("button");
-        uiItem = new UiItem(UiItemType.Button, "test2");
-        transform = new Transform(new Point(600, 100), rendering.Source.Size);
-        collider = new Collider(
-            transform.Destination, CollisionLayer.Ui, CollisionLayer.Ui);
-        button2.AddComponents(rendering, transform, uiItem, collider, new Clickable(() => SceneManager.Instance.ChangeScene("editor")));
 
-        Entity cursor = new Entity("cursor");
-        uiItem = new UiItem(UiItemType.Cursor);
+        var button1 = new Entity("button1")
+            .AddComponents(
+                new Rendering(rendering),
+                new Transform(transform),
+                new Collider(transform.Destination, CollisionLayer.Ui, CollisionLayer.Ui),
+                new UiItem(UiItemType.Button, "test"),
+                new Clickable(() => SceneManager.Instance.ChangeScene("scene1"))
+            );
+        var button2 = new Entity("button2")
+            .AddComponents(
+                new Rendering(rendering),
+                new Transform(transform.Destination.Location + new Point(500, 0) , rendering.Source.Size),
+                new Collider(
+                    new Rectangle(transform.Destination.Location + new Point(500, 0), transform.Destination.Size),
+                    CollisionLayer.Ui, CollisionLayer.Ui),
+                new UiItem(UiItemType.Button, "test2"),
+                new Clickable(() => SceneManager.Instance.ChangeScene("editor"))
+            );
+
         texture = Content.Load<Texture2D>(Textures.Asset_Cursor);
         rendering = new Rendering(texture, Textures.SourceR_Cursor);
-        transform = new Transform(new Point(500, 500), rendering.Source.Size);
-        collider = new Collider(
-            new Rectangle(
-                (int)transform.Destination.X,
-                (int)transform.Destination.Y,
-                1, 1
-            ), CollisionLayer.Ui, CollisionLayer.Ui);
-        cursor.AddComponents(rendering, transform, uiItem, collider);
+
+        var cursor = new Entity("cursor")
+            .AddComponents(
+                new Rendering(texture, Textures.SourceR_Cursor),
+                new Transform(new Point(500, 500), rendering.Source.Size),
+                new UiItem(UiItemType.Cursor),
+                new Collider(
+                    new Rectangle(
+                        (int)transform.Destination.X,
+                        (int)transform.Destination.Y,
+                        1, 1
+                    ), CollisionLayer.Ui, CollisionLayer.Ui)
+            );
     }
 
     public override void Update(float deltaTime)
@@ -64,7 +73,7 @@ public class MainMenu : Scene
     {
         var entities = EntityManager.Instance.GetEntities();
         for (int i = 0; i < entities.Count; i++)
-            EntityManager.Instance.RemoveEntity(entities[i]);
+            entities[i].Destroy();
         
         Content.Unload();
     }

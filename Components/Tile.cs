@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using TDGame.Util;
 
 namespace TDGame.Components;
 public class Tile : Component
@@ -12,7 +13,7 @@ public class Tile : Component
         Vector2 moveDirection,
         bool isStart = false,
         bool isFinish = false,
-        bool active = true) : base(active)
+        bool active = true) : base(ComponentTypes.Tile, active)
     {
         MoveDirection = moveDirection;
         IsStart = isStart;

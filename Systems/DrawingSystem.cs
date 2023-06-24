@@ -2,13 +2,14 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TDGame.Components;
+using TDGame.Util;
 
 namespace TDGame.Systems;
 public class DrawingSystem : System<Rendering>
 {
     private SpriteBatch _spriteBatch;
 
-    public DrawingSystem(SpriteBatch spriteBatch) : base()
+    public DrawingSystem(SpriteBatch spriteBatch) : base(SystemTypes.Drawing)
     {
         _spriteBatch = spriteBatch;
     }

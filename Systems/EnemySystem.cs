@@ -1,10 +1,11 @@
 using Microsoft.Xna.Framework;
 using TDGame.Components;
+using TDGame.Util;
 
 namespace TDGame.Systems;
 public class EnemySystem : System<Enemy>
 {
-    public EnemySystem() : base() {}
+    public EnemySystem() : base(SystemTypes.Enemy) {}
 
     public override void Update(float deltaTime)
     {

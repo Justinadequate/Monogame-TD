@@ -5,11 +5,12 @@ using Microsoft.Xna.Framework.Input;
 using TDGame.Components;
 using TDGame.Components.Ui;
 using TDGame.Models;
+using TDGame.Util;
 
 namespace TDGame.Systems;
 public class UiSystem : System<UiItem>
 {
-    public UiSystem() : base() {}
+    public UiSystem() : base(SystemTypes.Ui) {}
 
     public override void Update(float deltaTime)
     {
