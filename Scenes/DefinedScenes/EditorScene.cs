@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -44,14 +45,25 @@ public class EditorScene : Scene
 
     public override void Update(float deltaTime)
     {
+        // Key names from 1 to 0:
+        // Apps
+        // Sleep
+        // NumPad0
+        // NumPad1
+        // NumPad2
+        // NumPad3
+        // NumPad4
+        // NumPad5
+        // RightWindows
+
         // TODO: tile type not updating, keyboard state not getting
-        if (Globals.KeyBoardState.IsKeyDown(Keys.NumPad1))
+        if (Globals.KeyBoardState.IsKeyDown(Keys.Apps))
             SelectedTileType = TileType.DirtPath;
-        else if (Globals.KeyBoardState.IsKeyDown(Keys.NumPad2))
+        else if (Globals.KeyBoardState.IsKeyDown(Keys.Sleep))
             SelectedTileType = TileType.Grass;
-        else if (Globals.KeyBoardState.IsKeyDown(Keys.NumPad3))
+        else if (Globals.KeyBoardState.IsKeyDown(Keys.NumPad0))
             SelectedTileType = TileType.Water;
-        else if (Globals.KeyBoardState.IsKeyDown(Keys.NumPad4))
+        else if (Globals.KeyBoardState.IsKeyDown(Keys.NumPad1))
             SelectedTileType = TileType.Mortar;
 
         var mousePos = new Rectangle(Globals.MouseState.Position, new Point(1, 1));
