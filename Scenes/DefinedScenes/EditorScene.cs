@@ -45,7 +45,7 @@ public class EditorScene : Scene
 
     public override void Update(float deltaTime)
     {
-        // Key names from 1 to 0:
+        // Key names from 1 to 0 on weird windows keyboard:
         // Apps
         // Sleep
         // NumPad0
@@ -56,14 +56,17 @@ public class EditorScene : Scene
         // NumPad5
         // RightWindows
 
-        // TODO: tile type not updating, keyboard state not getting
-        if (Globals.KeyBoardState.IsKeyDown(Keys.Apps))
+        // if (Globals.KeyBoardState.GetPressedKeyCount() > 0)
+        //     foreach (var key in Globals.KeyBoardState.GetPressedKeys())
+        //         Debug.WriteLine(key);
+
+        if (Globals.KeyBoardState.IsKeyDown(Keys.D1))
             SelectedTileType = TileType.DirtPath;
-        else if (Globals.KeyBoardState.IsKeyDown(Keys.Sleep))
+        else if (Globals.KeyBoardState.IsKeyDown(Keys.D2))
             SelectedTileType = TileType.Grass;
-        else if (Globals.KeyBoardState.IsKeyDown(Keys.NumPad0))
+        else if (Globals.KeyBoardState.IsKeyDown(Keys.D3))
             SelectedTileType = TileType.Water;
-        else if (Globals.KeyBoardState.IsKeyDown(Keys.NumPad1))
+        else if (Globals.KeyBoardState.IsKeyDown(Keys.D4))
             SelectedTileType = TileType.Mortar;
 
         var mousePos = new Rectangle(Globals.MouseState.Position, new Point(1, 1));
@@ -99,6 +102,7 @@ public class EditorScene : Scene
                 if (Map.Tiles[x,y].Type == TileType.Mortar)
                     color = Color.SlateGray;
 
+                // TODO: drawing dots and not tiles
                 spriteBatch.Draw(
                     texture: Rectangle,
                     position: Map.Tiles[x,y].Bounds.Location.ToVector2(),
